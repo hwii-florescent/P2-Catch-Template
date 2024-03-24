@@ -5,10 +5,19 @@
 
 using namespace std;
 
-TEST_CASE("Empty Graph Test", "[AdjacencyList]") {
+TEST_CASE("Disconnected Graph", "[AdjacencyList]") {
     AdjacencyList pr;
-    string input = R"(0 1)";
-    string expectedOutput = R"()";
+    string input = R"(3 2
+web1.com web2.com
+web3.com web4.com
+web5.com web6.com
+    )";
+    string expectedOutput = R"(web1.com 0.00
+web2.com 0.17
+web3.com 0.00
+web4.com 0.17
+web5.com 0.00
+web6.com 0.17)";
 
     pr.parseInput(input);
     string actualOutput = pr.getRanksAsString();
@@ -33,12 +42,22 @@ web3.com 0.33
     REQUIRE(actualOutput == expectedOutput);
 }
 
-TEST_CASE("Website Link To Itself", "[AdjacencyList]") {
+TEST_CASE("Large Power Iterations", "[AdjacencyList]") {
     AdjacencyList pr;
-    string input = R"(1 3
-web1.com web1.com
+    string input = R"(6 9999
+web1.com web3.com
+web2.com web1.com
+web3.com web5.com
+web6.com web4.com
+web4.com web6.com
+web5.com web2.com
 )";
-    string expectedOutput = R"(web1.com 1.00
+    string expectedOutput = R"(web1.com 0.17
+web2.com 0.17
+web3.com 0.17
+web4.com 0.17
+web5.com 0.17
+web6.com 0.17
 )";
 
     pr.parseInput(input);
