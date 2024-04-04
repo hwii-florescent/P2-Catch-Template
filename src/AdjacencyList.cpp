@@ -21,9 +21,9 @@ void AdjacencyList::PageRank(int n)
 {
     map<string, double> tempRank;        //create a temp to store the current rank
 
-    for (auto &i : inDegree)        //initialize the rank
+    for (auto &webPage : inDegree)        //initialize the rank
     {
-        rank[i.first] = 1.0f / inDegree.size();
+        rank[webPage.first] = 1.0f / inDegree.size();
     }
 
     for (int i = 1; i < n; ++i)     //calculate the rank after n power iterations
@@ -50,25 +50,25 @@ void AdjacencyList::PageRank(int n)
 
 void AdjacencyList::parseInput(string input) {
     istringstream iss(input);       //stream the input value
-    int no_of_lines, power_iterations;
+    int noOfLines, powerIterations;
     string from, to;
-    iss >> no_of_lines >> power_iterations;     //take in the values for num of line and power of iteration
+    iss >> noOfLines >> powerIterations;     //take in the values for num of line and power of iteration
     
-    for(int i = 0; i < no_of_lines; i++)        //loop to take the input value of the page rank
+    for(int i = 0; i < noOfLines; i++)        //loop to take the input value of the page rank
     {
         iss >> from >> to;
         insertEdge(from, to);
     }
 
-    PageRank(power_iterations);     //do the iterations
+    PageRank(powerIterations);     //do the iterations
 }
 
 string AdjacencyList::getRanksAsString() {
     string output;
-    for (auto &i : rank)    //instead of printing the pageRank of all webpages, we add it into a formatted string using stringstream to use in Catch2 Test
+    for (auto &webPage : rank)    //instead of printing the pageRank of all webpages, we add it into a formatted string using stringstream to use in Catch2 Test
     {
         ostringstream oss; 
-        oss << fixed << setprecision(2) << i.first << " " << i.second << "\n";
+        oss << fixed << setprecision(2) << webPage.first << " " << webPage.second << "\n";
         output += oss.str();
     }
     return output;
